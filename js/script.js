@@ -48,7 +48,7 @@ document.querySelector('.agregar').addEventListener('click', () => {
       array.push([id, nombre, descripcion]);
       pintarTabla(array, tab)
       limpiar();
-      toastr.success('Dato agregado con exito');
+      toastr.success('Registro agregado con exito');
    }
 
 })
@@ -70,7 +70,7 @@ document.addEventListener('click', ({ target }) => {
    if (target.classList.contains('eliminar')) {
       array.splice(target.id, 1);
       pintarTabla(array, tab);
-      toastr.error('Dato eliminado con exito');
+      toastr.error('Registro eliminado con exito');
 
       // const dat = array.filter(res => res[0] != target.id)
       // array = dat;
@@ -83,13 +83,15 @@ document.addEventListener('click', ({ target }) => {
 })
 
 document.querySelector('.saveEditar').addEventListener('click', () => {
+   const index = sessionStorage.getItem('index');
    const id = Number(document.querySelector('.upId').value);
    const nombre = document.querySelector('.upNombre').value;
    const descripcion = document.querySelector('.upDescripcion').value;
-   const index = sessionStorage.getItem('index');
+
    array.splice(index, 1, [id, nombre, descripcion]);
    //console.log(array[index]);
    pintarTabla(array, tab);
+   toastr.info('Se editó el registro')
    limpiarEdit();
 
 })
@@ -103,7 +105,7 @@ document.querySelector('.orden').addEventListener('change', ({ target }) => {
    ) : ('');
    target.value === "id" ? (
       array.sort(ordenaId),
-      console.log(array),
+      //console.log(array),
       pintarTabla(array, tab),
       toastr.info('Se ordenó por id')
    ) : ('');
