@@ -4,7 +4,7 @@ import { pintarTabla } from "../modules/pintarTabla.js";
 
 let array = []
 const tab = document.querySelector('.tablares');
-const descargas = document.querySelector('#descargas');
+const opciones = document.querySelector('#opciones');
 
 document.querySelector('.upload').addEventListener('change', ({ target }) => {
    const archivo = target.files[0];
@@ -15,7 +15,7 @@ document.querySelector('.upload').addEventListener('change', ({ target }) => {
    lector.onload = ({ target }) => {
       //console.log(target.result); 
       datosArray(target.result);
-      descargas.removeAttribute('id');
+      opciones.removeAttribute('id');
       toastr.success('Datos cargados con exito');
    }
    lector.readAsText(archivo);
@@ -114,12 +114,12 @@ document.querySelector('.orden').addEventListener('change', ({ target }) => {
    target.value === "nombre" ? (
       array.sort(ordenaNombre),
       pintarTabla(array, tab),
-      toastr.info('Se ordeno por nombre')
+      toastr.info('Se ordenó por nombre')
    ) : ('');
    target.value === "id" ? (
       array.sort(ordenaId),
       pintarTabla(array, tab),
-      toastr.info('Se ordeno por id')
+      toastr.info('Se ordenó por id')
    ) : ('');
 
 })
