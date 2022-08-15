@@ -35,9 +35,9 @@ const datosArray = (data) => {
 }
 
 document.querySelector('.agregar').addEventListener('click', () => {
-   let id = Number(document.querySelector('.addId').value);
-   let nombre = document.querySelector('.addNombre').value;
-   let descripcion = document.querySelector('.addDescripcion').value;
+   const id = Number(document.querySelector('.addId').value);
+   const nombre = document.querySelector('.addNombre').value;
+   const descripcion = document.querySelector('.addDescripcion').value;
 
    if (!nombre || !id || !descripcion) {
       Swal.fire({
@@ -59,11 +59,11 @@ const limpiar = () => {
    document.querySelector('.addDescripcion').value = "";
 }
 
-//  const limpiarEdit = () => {
-// //    document.querySelector('.upId').value = "";
-// //    document.querySelector('.upNombre').value = "";
-// //    document.querySelector('.upDescripcion').value = "";
-//  }
+const limpiarEdit = () => {
+   document.querySelector('.upId').value = "";
+   document.querySelector('.upNombre').value = "";
+   document.querySelector('.upDescripcion').value = "";
+}
 
 
 document.addEventListener('click', ({ target }) => {
@@ -78,38 +78,23 @@ document.addEventListener('click', ({ target }) => {
    }
 })
 
-// document.addEventListener('click', ({ target }) => {
+document.addEventListener('click', ({ target }) => {
+   if (target.classList.contains('editar')) sessionStorage.setItem('index', target.id);
+})
 
-//    if (target.classList.contains('editar')) {
-//       const id = document.querySelector('.upId').value;
-//       const nombre = document.querySelector('.upNombre').value;
-//       const descripcion = document.querySelector('.upDescripcion').value;
-//       array.splice(target.id, 1, [id, nombre, descripcion]);
-//       pintarTabla(array, tab);
-//    }
-// })
+document.querySelector('.saveEditar').addEventListener('click', () => {
+   const id = Number(document.querySelector('.upId').value);
+   const nombre = document.querySelector('.upNombre').value;
+   const descripcion = document.querySelector('.upDescripcion').value;
+   const index = sessionStorage.getItem('index');
+   array.splice(index, 1, [id, nombre, descripcion]);
+   //console.log(array[index]);
+   pintarTabla(array, tab);
+   limpiarEdit();
 
-
-
-// document.addEventListener('click', ({ target }) => {
-//    //const elemento = array.find(res => res[0] == target.name);
-//    if (target.classList.contains('editar')) {
-//       console.log(target.id);
-//       document.querySelector('.saveEditar').addEventListener('click', (e) => {
-//          e.preventDefault()
-//          const id = Number(document.querySelector('.upId').value);
-//          const nombre = document.querySelector('.upNombre').value;
-//          const descripcion = document.querySelector('.upDescripcion').value;
-//          console.log(target.id);
-//          array.splice(Number(target.id), 1, [id, nombre, descripcion]);
-//          pintarTabla(array, tab);
-//       })
-//    }
+})
 
 
-//    //limpiarEdit()
-
-// })
 document.querySelector('.orden').addEventListener('change', ({ target }) => {
    target.value === "nombre" ? (
       array.sort(ordenaNombre),
@@ -118,6 +103,7 @@ document.querySelector('.orden').addEventListener('change', ({ target }) => {
    ) : ('');
    target.value === "id" ? (
       array.sort(ordenaId),
+      console.log(array),
       pintarTabla(array, tab),
       toastr.info('Se ordenó por id')
    ) : ('');
