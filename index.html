@@ -30,7 +30,7 @@
    </nav>
 
    <div class="container mt-5">
-      <h4 class="text-center mt-5">Analisis de archivos .txt .csv</h4>
+      <h2 class="text-center mt-5">Analisis de archivos .txt .csv</h2>
       <div class="input-group mb-3">
          <input type="file" class="form-control upload" id="inputGroupFile02">
          <label class="input-group-text" for="inputGroupFile02">Upload</label>
@@ -40,9 +40,14 @@
             Datos
          </button>
 
-         <span class="descargas">
-            <button class="btn btn-primary desId">Descargar por Id</button>
-            <button class="btn btn-primary desNom">Descargar por Nombre</button>
+         <span class="d-flex justify-content-around" id="descargas">
+            <span class="w-100"><strong>Ordenar por:</strong></span>
+            <select class="form-select orden me-5" aria-label="Default select example">
+               <option selected>Selecciona..</option>
+               <option value="id">Id</option>
+               <option value="nombre">Nombre</option>
+            </select>
+            <button class="btn btn-primary descargar">Descargar</button>
          </span>
       </div>
       <table class="table table-hover mt-5 rounded-4">

@@ -4,7 +4,7 @@ import { pintarTabla } from "../modules/pintarTabla.js";
 
 let array = []
 const tab = document.querySelector('.tablares');
-const descargas = document.querySelector('.descargas');
+const descargas = document.querySelector('#descargas');
 
 document.querySelector('.upload').addEventListener('change', ({ target }) => {
    const archivo = target.files[0];
@@ -15,7 +15,7 @@ document.querySelector('.upload').addEventListener('change', ({ target }) => {
    lector.onload = ({ target }) => {
       //console.log(target.result); 
       datosArray(target.result);
-      descargas.removeAttribute('class');
+      descargas.removeAttribute('id');
       toastr.success('Datos cargados con exito');
    }
    lector.readAsText(archivo);
@@ -70,6 +70,7 @@ document.addEventListener('click', ({ target }) => {
    if (target.classList.contains('eliminar')) {
       array.splice(target.id, 1);
       pintarTabla(array, tab);
+      toastr.error('Dato eliminado con exito');
 
       // const dat = array.filter(res => res[0] != target.id)
       // array = dat;
@@ -109,10 +110,21 @@ document.addEventListener('click', ({ target }) => {
 //    //limpiarEdit()
 
 // })
+document.querySelector('.orden').addEventListener('change', ({ target }) => {
+   target.value === "nombre" ? (
+      array.sort(ordenaNombre),
+      pintarTabla(array, tab),
+      toastr.info('Se ordeno por nombre')
+   ) : ('');
+   target.value === "id" ? (
+      array.sort(ordenaId),
+      pintarTabla(array, tab),
+      toastr.info('Se ordeno por id')
+   ) : ('');
 
-document.querySelector('.desNom').addEventListener('click', () => {
-   array.sort(ordenaNombre);
-   pintarTabla(array, tab)
+})
+
+document.querySelector('.descargar').addEventListener('click', () => {
 
    const csvDoc = "data:text/csv;charset=utf-8,"
       + array.map(res => res.join(";")).join("\n");
@@ -122,14 +134,5 @@ document.querySelector('.desNom').addEventListener('click', () => {
 
 });
 
-document.querySelector('.desId').addEventListener('click', () => {
-   array.sort(ordenaId);
-   pintarTabla(array, tab)
 
-   const csvDoc = "data:text/csv;charset=utf-8,"
-      + array.map(res => res.join(";")).join("\n");
-
-   const doc = encodeURI(csvDoc);
-   window.open(doc);
-
-});
+window.addEventListener('beforeunload', (e) => e.preventDefault());
